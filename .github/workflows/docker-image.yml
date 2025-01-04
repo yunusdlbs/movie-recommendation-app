@@ -7,13 +7,34 @@ on:
     branches: [ "master" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag movie-image:v1.0.0
+
+    - name: Save Docker image as tar file
+      run: docker save movie-image:v1.0.0 -o movie-image.tar
+
+    - name: Copy Docker image to remote server
+      uses: appleboy/scp-action@v0.1.1
+      with:
+        host: 192.168.17.153
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: movie-image.tar
+        target: /home/username/
+
+    - name: Run Docker image on remote server
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: 192.168.17.153
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          docker load < /home/username/movie-image.tar
+          docker run -d -p 5000:8501 --name movie-container movie-image:v1.0.0
 
