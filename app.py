@@ -4,7 +4,7 @@ import pandas as pd
 
 # Load movie data and similarity
 movies = pickle.load(open('movies_list.pcl', 'rb'))
-similarity = pickle.load(open('similarity.pckl', 'rb'))
+#similarity = pickle.load(open('similarity.pckl', 'rb'))
 movies_genre = pickle.load(open('movies_votes.pcl', 'rb'))
 movie_list = movies["title"].values
 genre = movies_genre["genre"].unique()  # Assuming there's a 'genre' column
