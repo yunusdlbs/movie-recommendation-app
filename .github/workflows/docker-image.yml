@@ -17,4 +17,6 @@ jobs:
         docker build . --file Dockerfile --tag movie-image:v1.0.0
     - name: Run Docker container
       run: |
+        docker stop movie-container
+        docker rm movie-container
         docker run -d -p 5000:8501 --name movie-container movie-image:v1.0.0
