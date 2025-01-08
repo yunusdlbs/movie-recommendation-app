@@ -51,7 +51,7 @@ def get_top_movies_by_genre(genre):
 
 # App Layout
 st.markdown(
-    "<h1 style='text-align: center;'>🎬📚 Film/Kitap Tavsiye Uygulaması </h1>",
+    "<h1 style='text-align: center;'>🎬📚 Book/Movie Recommendation App </h1>",
     unsafe_allow_html=True
 )
 
